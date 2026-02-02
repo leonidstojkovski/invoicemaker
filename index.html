@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>КЛИМА - ТЕК</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Header with logo and company info */
+       .header {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 3px solid #3498db;
+    align-items: start;
+}
+
+        .company-info {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .company-info h1 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .company-info p {
+            color: #34495e;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            margin: 2px 0;
+        }
+
+       .logo-section {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-left: 20px;
+}
+
+.logo-preview {
+    max-width: 200px;
+    max-height: 230px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+        .logo-preview.has-image {
+            border: none;
+            padding: 0;
+        }
+
+        #logoInput {
+            display: none;
+        }
+
+        .upload-btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background: #3498db;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            margin-top: 10px;
+        }
+
+        .upload-btn:hover {
+            background: #2980b9;
+        }
+
+        /* Invoice details and client info in compact layout */
+        .info-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 25px;
+        }
+
+        .info-section-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 25px;
+        }
+
+        .info-block h2 {
+            color: #3498db;
+            font-size: 1rem;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #7f8c8d;
+            margin-bottom: 3px;
+            font-size: 0.75rem;
+            display: block;
+            text-transform: uppercase;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ecf0f1;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        /* Compact line items table */
+        .line-items-section {
+            margin-bottom: 20px;
+        }
+
+        .line-items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+
+        .line-items-table th {
+            background: #3498db;
+            color: white;
+            padding: 8px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .line-items-table td {
+            padding: 6px 8px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .line-items-table input {
+            width: 100%;
+            padding: 6px;
+            border: 1px solid #ecf0f1;
+            border-radius: 3px;
+            font-size: 0.85rem;
+        }
+
+        .line-items-table input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+        }
+
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #219a52;
+        }
+
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.75rem;
+        }
+
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+
+        /* Compact totals */
+        .totals-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-top: 20px;
+        }
+
+        .notes-compact {
+            flex: 1;
+            margin-right: 30px;
+        }
+
+        .notes-compact label {
+            font-weight: 600;
+            color: #7f8c8d;
+            margin-bottom: 5px;
+            font-size: 0.75rem;
+            display: block;
+            text-transform: uppercase;
+        }
+
+        .notes-compact textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ecf0f1;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .totals-box {
+            width: 280px;
+        }
+
+        .totals-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            font-size: 0.9rem;
+        }
+
+        .totals-row label {
+            color: #7f8c8d;
+            font-weight: 600;
+        }
+
+        .totals-row input {
+            width: 60px;
+            padding: 4px;
+            border: 1px solid #ecf0f1;
+            border-radius: 3px;
+            text-align: right;
+            font-size: 0.85rem;
+        }
+
+        .totals-row.grand-total {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #2c3e50;
+            border-top: 2px solid #3498db;
+            margin-top: 8px;
+            padding-top: 12px;
+        }
+
+        /* Actions */
+        .actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #ecf0f1;
+        }
+
+        .actions .btn {
+            padding: 12px 30px;
+            font-size: 1rem;
+        }
+
+        /* Print styles */
+        @media print {
+        .header {
+        display: grid !important;
+        grid-template-columns: 1fr auto !important;
+        align-items: start !important;
+    }
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                padding: 20px;
+                max-width: 100%;
+            }
+
+            /* Maintain side-by-side layout in print */
+            .info-section-row {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 30px !important;
+            }
+            
+            .actions {
+                display: none;
+            }
+            
+            .upload-btn {
+                display: none;
+            }
+            
+            input, textarea {
+                border: none !important;
+                background: transparent !important;
+                padding: 2px !important;
+            }
+            
+            .btn {
+                display: none;
+            }
+
+       .logo-preview {
+        width: 220px !important;   /* ← increase here */
+        max-width: none !important;
+        height: auto !important;
+    }
+
+            .form-group input,
+            .form-group textarea,
+            .line-items-table input,
+            .notes-compact textarea {
+                font-size: 0.85rem !important;
+            }
+
+            .line-items-table td {
+                padding: 4px 6px !important;
+            }
+
+            .totals-row {
+                padding: 4px 0 !important;
+            }
+
+            /* Ensure single page */
+            .container {
+                page-break-inside: avoid;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header,
+            .info-section-row {
+                grid-template-columns: 1fr;
+            }
+
+            .logo-section {
+                justify-content: flex-start;
+            }
+
+            .totals-section {
+                flex-direction: column;
+            }
+
+            .notes-compact {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+
+            .totals-box {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header with Company Info and Logo -->
+        <div class="header">
+            <div class="company-info">
+                <h1>КЛИМА - ТЕК</h1>
+                <p><strong>Адреса:</strong> Гаврил Константиновиќ 8б</p>
+                <p><strong>Телефон:</strong> +38977628549, +38975773773</p>
+                <p><strong>Емаил:</strong> klimatek25@gmail.com</p>
+                <p><strong>Жиро Сметка:</strong> 380071915900117</p>
+                <p><strong>ЕДБ:</strong> 5032026507119</p>
+            </div>
+            <div class="logo-section">
+    <img id="logoPreview" class="logo-preview has-image" src="./logoMaks.png" alt="КЛИМА-ТЕК Лого">
+</div>
+        </div>
+
+        <!-- Invoice Details and Client Info -->
+        <div class="info-section-row">
+            <div class="info-block">
+                <h2>Детали на Фактура</h2>
+                <div class="form-group">
+                    <label for="invoiceNumber">Број на фактура</label>
+                    <input type="text" id="invoiceNumber" placeholder="INV-001">
+                </div>
+                <div class="form-group">
+                    <label for="invoiceDate">Датум на издавање</label>
+                    <input type="date" id="invoiceDate">
+                </div>
+                <div class="form-group">
+                    <label for="dueDate">Датум на наплата</label>
+                    <input type="date" id="dueDate">
+                </div>
+            </div>
+
+            <div class="info-block">
+                <h2>Клиент</h2>
+                <div class="form-group">
+                    <label for="toName">Име / Компанија</label>
+                    <input type="text" id="toName" placeholder="Име на клиент">
+                </div>
+                <div class="form-group">
+                    <label for="toAddress">Адреса</label>
+                    <textarea id="toAddress" placeholder="Адреса на клиент" rows="2"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="toPhone">Телефон</label>
+                    <input type="tel" id="toPhone" placeholder="+389 7 567 890">
+                </div>
+            </div>
+        </div>
+
+        <!-- Line Items -->
+        <div class="line-items-section">
+            <table class="line-items-table">
+                <thead>
+                    <tr>
+                        <th style="width: 45%;">ОПИС</th>
+                        <th style="width: 12%;">КОЛИЧИНА</th>
+                        <th style="width: 15%;">ЦЕНА</th>
+                        <th style="width: 15%;">ВКУПНО</th>
+                        <th style="width: 13%;"></th>
+                    </tr>
+                </thead>
+                <tbody id="lineItems">
+                    <tr>
+                        <td><input type="text" class="item-desc" placeholder="Опис на продукт/услуга"></td>
+                        <td><input type="number" class="item-qty" value="1" min="1" step="1"></td>
+                        <td><input type="number" class="item-price" value="0" step="0.01" min="0"></td>
+                        <td class="item-total">0.00</td>
+                        <td><button class="btn btn-danger" onclick="removeItem(this)">Избриши</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn btn-primary" onclick="addItem()">+ Додади Ставка</button>
+        </div>
+
+        <!-- Notes and Totals Side by Side -->
+        <div class="totals-section">
+            <div class="notes-compact">
+                <label>Забелешки</label>
+                <textarea id="notes" placeholder="Дополнителни забелешки..."></textarea>
+            </div>
+
+            <div class="totals-box">
+                <div class="totals-row">
+                    <label>Вкупно:</label>
+                    <span id="subtotal">0.00 ДЕН</span>
+                </div>
+                <div class="totals-row">
+                    <label>Данок (%):</label>
+                    <input type="number" id="taxRate" value="0" min="0" max="100">
+                </div>
+                <div class="totals-row">
+                    <label>Данок:</label>
+                    <span id="taxAmount">0.00 ДЕН</span>
+                </div>
+                <div class="totals-row grand-total">
+                    <label>ВКУПНО:</label>
+                    <span id="grandTotal">0.00 ДЕН</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="actions">
+            <button class="btn btn-success" onclick="window.print()">Печати / Зачувај PDF</button>
+        </div>
+    </div>
+
+    <script>
+        const CURRENCY = ' ДЕН';
+
+        // Set default dates
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date();
+            const dueDate = new Date();
+            dueDate.setDate(today.getDate() + 30);
+
+            document.getElementById('invoiceDate').value = today.toISOString().split('T')[0];
+            document.getElementById('dueDate').value = dueDate.toISOString().split('T')[0];
+
+            // Generate default invoice number
+            const timestamp = Date.now().toString().slice(-6);
+            document.getElementById('invoiceNumber').value = 'INV-' + timestamp;
+            
+            loadFromLocalStorage();
+        });
+
+        // Logo upload handler
+        document.getElementById('logoInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const logoPreview = document.getElementById('logoPreview');
+                    logoPreview.src = event.target.result;
+                    logoPreview.style.display = 'block';
+                    logoPreview.classList.add('has-image');
+                    localStorage.setItem('invoice_logo', event.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Load logo from localStorage if exists, otherwise keep default
+        const savedLogo = localStorage.getItem('invoice_logo');
+        if (savedLogo) {
+            const logoPreview = document.getElementById('logoPreview');
+            logoPreview.src = savedLogo;
+        }
+
+        // Add new line item
+        function addItem() {
+            const tbody = document.getElementById('lineItems');
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td><input type="text" class="item-desc" placeholder="Опис на продукт/услуга"></td>
+                <td><input type="number" class="item-qty" value="1" min="1" step="1"></td>
+                <td><input type="number" class="item-price" value="0" step="0.01" min="0"></td>
+                <td class="item-total">0.00</td>
+                <td><button class="btn btn-danger" onclick="removeItem(this)">Избриши</button></td>
+            `;
+            tbody.appendChild(row);
+            attachInputListeners(row);
+        }
+
+        // Remove line item
+        function removeItem(btn) {
+            const tbody = document.getElementById('lineItems');
+            if (tbody.children.length > 1) {
+                btn.closest('tr').remove();
+                calculateTotals();
+            } else {
+                alert('Мора да имате најмалку една ставка.');
+            }
+        }
+
+        // Calculate totals
+        function calculateTotals() {
+            const rows = document.querySelectorAll('#lineItems tr');
+            let subtotal = 0;
+
+            rows.forEach(row => {
+                const qty = parseFloat(row.querySelector('.item-qty').value) || 0;
+                const price = parseFloat(row.querySelector('.item-price').value) || 0;
+                const total = qty * price;
+                row.querySelector('.item-total').textContent = total.toFixed(2);
+                subtotal += total;
+            });
+
+            const taxRate = parseFloat(document.getElementById('taxRate').value) || 0;
+            const taxAmount = subtotal * (taxRate / 100);
+            const grandTotal = subtotal + taxAmount;
+
+            document.getElementById('subtotal').textContent = subtotal.toFixed(2) + CURRENCY;
+            document.getElementById('taxAmount').textContent = taxAmount.toFixed(2) + CURRENCY;
+            document.getElementById('grandTotal').textContent = grandTotal.toFixed(2) + CURRENCY;
+            
+            saveToLocalStorage();
+        }
+
+        // Attach input listeners to a row
+        function attachInputListeners(row) {
+            row.querySelectorAll('.item-qty, .item-price').forEach(input => {
+                input.addEventListener('input', calculateTotals);
+            });
+        }
+
+        // Collect all invoice data
+        function collectInvoiceData() {
+            const items = [];
+            document.querySelectorAll('#lineItems tr').forEach(row => {
+                items.push({
+                    description: row.querySelector('.item-desc').value,
+                    quantity: parseFloat(row.querySelector('.item-qty').value),
+                    unitPrice: parseFloat(row.querySelector('.item-price').value),
+                    total: parseFloat(row.querySelector('.item-total').textContent)
+                });
+            });
+
+            return {
+                invoiceNumber: document.getElementById('invoiceNumber').value,
+                invoiceDate: document.getElementById('invoiceDate').value,
+                dueDate: document.getElementById('dueDate').value,
+                to: {
+                    name: document.getElementById('toName').value,
+                    address: document.getElementById('toAddress').value,
+                    phone: document.getElementById('toPhone').value
+                },
+                items: items,
+                taxRate: parseFloat(document.getElementById('taxRate').value),
+                notes: document.getElementById('notes').value,
+                subtotal: document.getElementById('subtotal').textContent,
+                taxAmount: document.getElementById('taxAmount').textContent,
+                grandTotal: document.getElementById('grandTotal').textContent
+            };
+        }
+
+        // Save to localStorage
+        function saveToLocalStorage() {
+            try {
+                const data = collectInvoiceData();
+                localStorage.setItem('invoice_draft', JSON.stringify(data));
+            } catch (e) {
+                console.error('Failed to save to localStorage:', e);
+            }
+        }
+
+        // Load from localStorage
+        function loadFromLocalStorage() {
+            try {
+                const saved = localStorage.getItem('invoice_draft');
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    
+                    // Restore invoice details
+                    if (data.invoiceNumber) document.getElementById('invoiceNumber').value = data.invoiceNumber;
+                    if (data.invoiceDate) document.getElementById('invoiceDate').value = data.invoiceDate;
+                    if (data.dueDate) document.getElementById('dueDate').value = data.dueDate;
+                    
+                    // Restore client info
+                    if (data.to) {
+                        if (data.to.name) document.getElementById('toName').value = data.to.name;
+                        if (data.to.address) document.getElementById('toAddress').value = data.to.address;
+                        if (data.to.phone) document.getElementById('toPhone').value = data.to.phone;
+                    }
+                    
+                    // Restore tax and notes
+                    if (data.taxRate) document.getElementById('taxRate').value = data.taxRate;
+                    if (data.notes) document.getElementById('notes').value = data.notes;
+                    
+                    // Restore line items
+                    if (data.items && data.items.length > 0) {
+                        const tbody = document.getElementById('lineItems');
+                        tbody.innerHTML = '';
+                        data.items.forEach(item => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td><input type="text" class="item-desc" value="${item.description || ''}" placeholder="Опис на продукт/услуга"></td>
+                                <td><input type="number" class="item-qty" value="${item.quantity || 1}" min="1" step="1"></td>
+                                <td><input type="number" class="item-price" value="${item.unitPrice || 0}" step="0.01" min="0"></td>
+                                <td class="item-total">${(item.total || 0).toFixed(2)}</td>
+                                <td><button class="btn btn-danger" onclick="removeItem(this)">Избриши</button></td>
+                            `;
+                            tbody.appendChild(row);
+                            attachInputListeners(row);
+                        });
+                    }
+                    
+                    calculateTotals();
+                }
+            } catch (e) {
+                console.error('Failed to load from localStorage:', e);
+            }
+        }
+
+        // Listen for input changes to recalculate
+        document.addEventListener('input', function(e) {
+            if (e.target.classList.contains('item-qty') ||
+                e.target.classList.contains('item-price') ||
+                e.target.id === 'taxRate') {
+                calculateTotals();
+            }
+        });
+
+        // Attach listeners to initial row
+        document.querySelectorAll('#lineItems tr').forEach(row => {
+            attachInputListeners(row);
+        });
+
+        // Before print, make inputs look better
+        window.addEventListener('beforeprint', function() {
+            document.querySelectorAll('input, textarea').forEach(el => {
+                el.style.border = 'none';
+                el.style.background = 'transparent';
+            });
+        });
+    </script>
+</body>
+</html>
