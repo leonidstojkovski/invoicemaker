@@ -28,82 +28,56 @@
         }
 
         /* Header with logo and company info */
-       .header {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 30px;
-    margin-bottom: 30px;
-    padding-bottom: 20px;
-    border-bottom: 3px solid #3498db;
-    align-items: start;
-}
+        .header {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+            align-items: start;
+        }
 
         .company-info {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 2px;
         }
 
         .company-info h1 {
             color: #2c3e50;
-            font-size: 1.8rem;
-            margin-bottom: 10px;
+            font-size: 1.4rem;
+            margin-bottom: 5px;
         }
 
         .company-info p {
             color: #34495e;
-            font-size: 0.9rem;
-            line-height: 1.4;
-            margin: 2px 0;
+            font-size: 0.8rem;
+            line-height: 1.2;
+            margin: 1px 0;
         }
 
-       .logo-section {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding-left: 20px;
-}
+        .logo-section {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-left: 20px;
+        }
 
-.logo-preview {
-    max-width: 200px;
-    max-height: 230px;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-}
+        .logo-preview {
+            max-width: 180px;
+            max-height: 140px;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
 
         .logo-preview.has-image {
             border: none;
             padding: 0;
         }
 
-        #logoInput {
-            display: none;
-        }
-
-        .upload-btn {
-            display: inline-block;
-            padding: 8px 16px;
-            background: #3498db;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            margin-top: 10px;
-        }
-
-        .upload-btn:hover {
-            background: #2980b9;
-        }
-
-        /* Invoice details and client info in compact layout */
-        .info-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-bottom: 25px;
-        }
-
+        /* Invoice details and client info */
         .info-section-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -113,7 +87,7 @@
 
         .info-block h2 {
             color: #3498db;
-            font-size: 1rem;
+            font-size: 0.8rem;
             margin-bottom: 12px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -127,7 +101,7 @@
             font-weight: 600;
             color: #7f8c8d;
             margin-bottom: 3px;
-            font-size: 0.75rem;
+            font-size: 0.60rem;
             display: block;
             text-transform: uppercase;
         }
@@ -238,12 +212,12 @@
             margin-top: 20px;
         }
 
-        .notes-compact {
+        .notes-box {
             flex: 1;
             margin-right: 30px;
         }
 
-        .notes-compact label {
+        .notes-box label {
             font-weight: 600;
             color: #7f8c8d;
             margin-bottom: 5px;
@@ -252,14 +226,11 @@
             text-transform: uppercase;
         }
 
-        .notes-compact textarea {
-            width: 100%;
+        .notes-box #notes {
             padding: 8px;
-            border: 1px solid #ecf0f1;
-            border-radius: 4px;
             font-size: 0.85rem;
-            min-height: 80px;
-            resize: vertical;
+            line-height: 1.4;
+            color: #34495e;
         }
 
         .totals-box {
@@ -296,6 +267,31 @@
             padding-top: 12px;
         }
 
+        /* Signatures */
+        .signatures-section {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 20px;
+        }
+
+        .signature-box {
+            width: 200px;
+            text-align: center;
+        }
+
+        .signature-line {
+            border-bottom: 1px solid #2c3e50;
+            height: 40px;
+            margin-bottom: 8px;
+        }
+
+        .signature-box label {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            font-weight: 600;
+        }
+
         /* Actions */
         .actions {
             display: flex;
@@ -313,11 +309,12 @@
 
         /* Print styles */
         @media print {
-        .header {
-        display: grid !important;
-        grid-template-columns: 1fr auto !important;
-        align-items: start !important;
-    }
+            .header {
+                display: grid !important;
+                grid-template-columns: 1fr auto !important;
+                align-items: start !important;
+            }
+
             body {
                 background: white;
                 padding: 0;
@@ -339,11 +336,7 @@
             .actions {
                 display: none;
             }
-            
-            .upload-btn {
-                display: none;
-            }
-            
+
             input, textarea {
                 border: none !important;
                 background: transparent !important;
@@ -354,17 +347,31 @@
                 display: none;
             }
 
-       .logo-preview {
-        width: 220px !important;   /* ← increase here */
-        max-width: none !important;
-        height: auto !important;
-    }
+            .logo-preview {
+                width: 180px !important;
+                max-width: none !important;
+                height: auto !important;
+            }
 
             .form-group input,
             .form-group textarea,
-            .line-items-table input,
-            .notes-compact textarea {
+            .line-items-table input {
                 font-size: 0.85rem !important;
+            }
+
+            .notes-box {
+                display: block !important;
+                text-align: left !important;
+            }
+
+            .notes-box label {
+                margin-bottom: 5px !important;
+                display: block !important;
+            }
+
+            .notes-box #notes {
+                font-size: 0.85rem !important;
+                text-align: left !important;
             }
 
             .line-items-table td {
@@ -373,6 +380,23 @@
 
             .totals-row {
                 padding: 4px 0 !important;
+            }
+
+            /* Move notes below grand totals in print */
+            .totals-section {
+                flex-direction: column !important;
+                align-items: flex-end !important;
+            }
+
+            .totals-section .notes-box {
+                order: 2 !important;
+                margin-right: 0 !important;
+                margin-top: 20px !important;
+                width: 100% !important;
+            }
+
+            .totals-section .totals-box {
+                order: 1 !important;
             }
 
             /* Ensure single page */
@@ -396,7 +420,7 @@
                 flex-direction: column;
             }
 
-            .notes-compact {
+            .notes-box {
                 margin-right: 0;
                 margin-bottom: 20px;
             }
@@ -417,11 +441,12 @@
                 <p><strong>Телефон:</strong> +38977628549, +38975773773</p>
                 <p><strong>Емаил:</strong> klimatek25@gmail.com</p>
                 <p><strong>Жиро Сметка:</strong> 380071915900117</p>
+                <p><strong>Банка:</strong> ПроКредит банка АД</p>
                 <p><strong>ЕДБ:</strong> 5032026507119</p>
             </div>
             <div class="logo-section">
-    <img id="logoPreview" class="logo-preview has-image" src="./logoMaks.png" alt="КЛИМА-ТЕК Лого">
-</div>
+                <img id="logoPreview" class="logo-preview has-image" src="./logoMaks.png" alt="КЛИМА-ТЕК Лого">
+            </div>
         </div>
 
         <!-- Invoice Details and Client Info -->
@@ -450,11 +475,15 @@
                 </div>
                 <div class="form-group">
                     <label for="toAddress">Адреса</label>
-                    <textarea id="toAddress" placeholder="Адреса на клиент" rows="2"></textarea>
+                    <input type="text" id="toAddress" placeholder="Адреса на клиент">
                 </div>
                 <div class="form-group">
                     <label for="toPhone">Телефон</label>
                     <input type="tel" id="toPhone" placeholder="+389 7 567 890">
+                </div>
+                <div class="form-group">
+                    <label for="toEmail">Емаил</label>
+                    <input type="email" id="toEmail" placeholder="Емаил на клиент">
                 </div>
             </div>
         </div>
@@ -486,11 +515,10 @@
 
         <!-- Notes and Totals Side by Side -->
         <div class="totals-section">
-            <div class="notes-compact">
-                <label>Забелешки</label>
-                <textarea id="notes" placeholder="Дополнителни забелешки..."></textarea>
+            <div class="notes-box">
+                <label>Забелешки:</label>
+                <div id="notes"><i>Правното лице не е даночен обврзник</i></div>
             </div>
-
             <div class="totals-box">
                 <div class="totals-row">
                     <label>Вкупно:</label>
@@ -508,6 +536,18 @@
                     <label>ВКУПНО:</label>
                     <span id="grandTotal">0.00 ДЕН</span>
                 </div>
+            </div>
+        </div>
+
+        <!-- Signatures -->
+        <div class="signatures-section">
+            <div class="signature-box">
+                <div class="signature-line"></div>
+                <label>Овластено лице</label>
+            </div>
+            <div class="signature-box">
+                <div class="signature-line"></div>
+                <label>Примач</label>
             </div>
         </div>
 
@@ -536,28 +576,6 @@
             loadFromLocalStorage();
         });
 
-        // Logo upload handler
-        document.getElementById('logoInput').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    const logoPreview = document.getElementById('logoPreview');
-                    logoPreview.src = event.target.result;
-                    logoPreview.style.display = 'block';
-                    logoPreview.classList.add('has-image');
-                    localStorage.setItem('invoice_logo', event.target.result);
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-
-        // Load logo from localStorage if exists, otherwise keep default
-        const savedLogo = localStorage.getItem('invoice_logo');
-        if (savedLogo) {
-            const logoPreview = document.getElementById('logoPreview');
-            logoPreview.src = savedLogo;
-        }
 
         // Add new line item
         function addItem() {
@@ -635,11 +653,12 @@
                 to: {
                     name: document.getElementById('toName').value,
                     address: document.getElementById('toAddress').value,
-                    phone: document.getElementById('toPhone').value
+                    phone: document.getElementById('toPhone').value,
+                    email: document.getElementById('toEmail').value,
                 },
                 items: items,
                 taxRate: parseFloat(document.getElementById('taxRate').value),
-                notes: document.getElementById('notes').value,
+                notes: document.getElementById('notes').textContent,
                 subtotal: document.getElementById('subtotal').textContent,
                 taxAmount: document.getElementById('taxAmount').textContent,
                 grandTotal: document.getElementById('grandTotal').textContent
@@ -673,11 +692,11 @@
                         if (data.to.name) document.getElementById('toName').value = data.to.name;
                         if (data.to.address) document.getElementById('toAddress').value = data.to.address;
                         if (data.to.phone) document.getElementById('toPhone').value = data.to.phone;
+                        if (data.to.email) document.getElementById('toEmail').value = data.to.email;
                     }
                     
-                    // Restore tax and notes
+                    // Restore tax
                     if (data.taxRate) document.getElementById('taxRate').value = data.taxRate;
-                    if (data.notes) document.getElementById('notes').value = data.notes;
                     
                     // Restore line items
                     if (data.items && data.items.length > 0) {
@@ -689,7 +708,7 @@
                                 <td><input type="text" class="item-desc" value="${item.description || ''}" placeholder="Опис на продукт/услуга"></td>
                                 <td><input type="number" class="item-qty" value="${item.quantity || 1}" min="1" step="1"></td>
                                 <td><input type="number" class="item-price" value="${item.unitPrice || 0}" step="0.01" min="0"></td>
-                                <td class="item-total">${(item.total || 0).toFixed(2)}</td>
+                                <td class="item-total" style="font-size: 0.85rem;">${(item.total || 0).toFixed(2)}</td>
                                 <td><button class="btn btn-danger" onclick="removeItem(this)">Избриши</button></td>
                             `;
                             tbody.appendChild(row);
