@@ -231,6 +231,15 @@
             font-size: 0.85rem;
             line-height: 1.4;
             color: #34495e;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            transition: border-color 0.3s;
+            min-height: 40px;
+        }
+
+        .notes-box #notes:focus {
+            outline: none;
+            border-color: #3498db;
         }
 
         .totals-box {
@@ -517,7 +526,7 @@
         <div class="totals-section">
             <div class="notes-box">
                 <label>Забелешки:</label>
-                <div id="notes"><i>Правното лице не е даночен обврзник</i></div>
+                <div id="notes" contenteditable="true"><i>Правното лице не е даночен обврзник</i></div>
             </div>
             <div class="totals-box">
                 <div class="totals-row">
@@ -658,7 +667,7 @@
                 },
                 items: items,
                 taxRate: parseFloat(document.getElementById('taxRate').value),
-                notes: document.getElementById('notes').textContent,
+                notes: document.getElementById('notes').innerHTML,
                 subtotal: document.getElementById('subtotal').textContent,
                 taxAmount: document.getElementById('taxAmount').textContent,
                 grandTotal: document.getElementById('grandTotal').textContent
@@ -697,6 +706,9 @@
                     
                     // Restore tax
                     if (data.taxRate) document.getElementById('taxRate').value = data.taxRate;
+
+                    // Restore notes
+                    if (data.notes) document.getElementById('notes').innerHTML = data.notes;
                     
                     // Restore line items
                     if (data.items && data.items.length > 0) {
@@ -729,6 +741,10 @@
                 e.target.classList.contains('item-price') ||
                 e.target.id === 'taxRate') {
                 calculateTotals();
+            }
+            // Save notes when edited
+            if (e.target.id === 'notes') {
+                saveToLocalStorage();
             }
         });
 
